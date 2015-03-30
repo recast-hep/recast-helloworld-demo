@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% set page_version = "RIVET" %}
+        
+{% block prebody %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+});
+</script>
+
+{% endblock %}
+
+{% block container%}
+<div class="page-header">
+    <h1>Results for request <small>{{requestId}} - {{parameter_pt}}</small></h1>
+</div>
+
+<div class="row">
+<a href="/resultfile/{{requestId}}/{{parameter_pt}}/helloWorld.txt">hello world</a>
+</div>
+{% endblock %}
