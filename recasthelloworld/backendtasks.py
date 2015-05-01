@@ -1,24 +1,14 @@
-from celery import shared_task
+import logging
 
-import datetime
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger('RECAST')
 
-from recastbackend.backendtasks import socketlog
-
-@shared_task
-def helloWorld(jobguid):
-    workdir = 'workdirs/{}'.format(jobguid)
-    with open('{}/helloWorld.txt'.format(workdir),'w') as f:
-      f.write('Hello World! {}'.format(str(datetime.datetime.now())))
-    socketlog(jobguid,'helloWorld done')
-    return jobguid
-
+def recast(ctx):
+  workdir = 'workdirs/{}'.format(ctx['jobguid'])
+  
+  log.info('Hello World')
+  with open('{}/helloWorld.txt'.format(workdir),'w') as f:
+    f.write('Hello World!')
   
 def resultlist():
   return ['helloWorld.txt']
-
-
-def get_chain(queuename):
-  chain = (
-            helloWorld.subtask(queue=queuename)
-          )
-  return chain
